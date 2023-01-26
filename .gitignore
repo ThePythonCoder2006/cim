@@ -50,3 +50,5 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+SDL2_ttf-devel-2.20.1-mingw.zip
