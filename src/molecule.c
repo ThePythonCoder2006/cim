@@ -1,6 +1,4 @@
-#ifndef __MOLECULE__
 #include <molecule.h>
-#endif
 
 Molecule *Molecule_create()
 {
