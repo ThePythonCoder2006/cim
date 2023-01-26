@@ -1,0 +1,12 @@
+{
+	"files.associations": {
+		"texture.h": "c",
+		"sdl_image.h": "c",
+		"graph.h": "c",
+		"atom.h": "c",
+		"stdlib.h": "c",
+		"sdl.h": "c",
+		"timer.h": "c",
+		"sdl_ttf.h": "c"
+	}
+}

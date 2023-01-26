@@ -1,8 +1,6 @@
 CC = gcc
 
-SRC_DIR = src
-SRC_FILE = main.c
-SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILE))
+SRC = $(wildcard src/*.c)
 
 BIN_DIR = bin
 BIN_FILE = main
@@ -12,7 +10,7 @@ COMMON_CFLAGS = -Wall -Wextra
 CFLAGS = $(COMMON_CFLAGS) -O3
 DB_CFLAGS = $(COMMON_CFLAGS) -ggdb
 
-LFLAGS = -lmingw32 -lSDL2_image -lSDL2main -lSDL2
+LFLAGS = -lmingw32 -lSDL2_ttf -lSDL2_image -lSDL2main -lSDL2
 IDIR = include
 
 LDIR = lib
@@ -23,3 +21,4 @@ comp:
 
 db:
 	$(CC) $(SRC) -o $(BIN) $(DB_CFLAGS) $(LFLAGS) -I $(IDIR) -L $(LDIR)
+	gdb bin/main
