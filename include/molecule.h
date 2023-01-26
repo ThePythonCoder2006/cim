@@ -13,19 +13,6 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
-enum
-{
-	BOND_SIMPLE,
-	BOND_DOUBLE,
-	BOND_TRIPLE,
-	BOND_QUADRUPLE,
-	BOND_SEXTUPLE,
-	BOND_WEDGE,
-	BOND_DASH,
-	BOND_STEREO_UNDEFINED,
-	BONDS_COUNT
-};
-
 typedef struct bond_struct
 {
 	uint8_t type;
