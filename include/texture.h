@@ -26,6 +26,6 @@ Texture *Texture_init();
 
 int Texture_free(Texture *texture);
 
-int Texture_load_text(Texture *texture, char *text, SDL_Color color, TTF_Font *font);
+int Texture_load_text(Texture *texture, const char *text, SDL_Color color, TTF_Font *font);
 
 #endif // __TEXTURE__

@@ -68,7 +68,7 @@ int Texture_render(Texture *texture, uint16_t x, uint16_t y, SDL_Rect *clip, dou
 	return 0;
 }
 
-int Texture_load_text(Texture *texture, char *text, SDL_Color color, TTF_Font *font)
+int Texture_load_text(Texture *texture, const char *text, SDL_Color color, TTF_Font *font)
 {
 	// Render text surface
 	SDL_Surface *textSurface = TTF_RenderText_Solid(font, text, color);

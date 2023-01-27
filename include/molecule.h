@@ -7,7 +7,7 @@
 #include <stdint.h>
 
 #include <texture.h>
-#include <atom.h>
+#include <consts.h>
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -39,5 +39,7 @@ typedef struct molecule_struct
 Molecule *Molecule_create();
 
 int Molecule_add_initial_atom(Molecule *mol, uint8_t z);
+
+int Molecule_renderer(Molecule *mol);
 
 #endif // __MOLECULE__

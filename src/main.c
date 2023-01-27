@@ -6,35 +6,11 @@
 #include <texture.h>
 #include <molecule.h>
 #include <timer.h>
+#include <consts.h>
 
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
-
-#define FILES_PATH "files"
-
-/* ---------------- printf macros ------------------ */
-
-#define PRINTF_BLACK "\033[0;30m"
-#define PRINTF_RED "\033[0;31m"
-#define PRINTF_GREEN "\033[0;32m"
-#define PRINTF_YELLOW "\033[0;33m"
-#define PRINTF_BLUE "\033[0;34m"
-#define PRINTF_PURPLE "\033[0;35m"
-#define PRINTF_CYAN "\033[0;36m"
-#define PRINTF_WHITE "\033[0;37m"
-#define PRINTF_RESET "\033[0m"
-
-#define PRINTF_ERROR PRINTF_RED "[ERROR]" PRINTF_RESET
-#define PRINTF_SUCESS PRINTF_GREEN "[SUCESS]" PRINTF_RESET
-#define PRINTF_WARNING PRINTF_YELLOW "[WARNING]" PRINTF_RESET
-
-/* ---------------- SDL macros ------------------ */
-
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 320
-#define SCREEN_FPS 60
-#define SCREEN_TPS (1000 / SCREEN_FPS)
 
 // The window on wich we render the app
 SDL_Window *gWindow = NULL;
@@ -44,6 +20,7 @@ SDL_Renderer *gRenderer = NULL;
 
 // the normal font for rendering anything (Fira code)
 TTF_Font *gFont;
+TTF_Font *gFPS_font;
 
 Texture *bond_wedge;
 Texture *fpstext;
@@ -69,6 +46,9 @@ int main(int argc, char **argv)
 		fprintf(stderr, PRINTF_ERROR " could not load media !!!!\n");
 		return 1;
 	}
+
+	Molecule *mol = Molecule_create();
+	Molecule_add_initial_atom(mol, N);
 
 	SDL_Color text_color = {0, 0, 0, 255};
 
@@ -103,13 +83,15 @@ int main(int argc, char **argv)
 			avgFPS = 0;
 
 		snprintf(buff, 64, "%lf", avgFPS);
-		Texture_load_text(fpstext, buff, text_color, gFont);
+		Texture_load_text(fpstext, buff, text_color, gFPS_font);
 
 		Texture_render(fpstext, 0, 0, NULL, 0, NULL, 0);
 
+		Molecule_renderer(mol);
+
 		SDL_RenderPresent(gRenderer);
 		++counted_frames;
-		// do the average over 2000 frames
+		// do the average over 200 frames
 		if (counted_frames > 200)
 		{
 			counted_frames = 0;
@@ -199,12 +181,12 @@ int load_media(void)
 	}
 
 	// load the font (Fira code)
-	gFont = TTF_OpenFont(FILES_PATH "/FiraCode.ttf", 10);
-	if (gFont == NULL)
-	{
-		printf("could not load the font file %s: %s\n", FILES_PATH "/FiraCode.ttf", TTF_GetError());
+	if ((gFont = TTF_OpenFont(FILES_PATH "/FiraCode.ttf", 32)) == NULL)
 		return 1;
-	}
+
+	// load the font for the fps display (Fira code but smaller)
+	if ((gFPS_font = TTF_OpenFont(FILES_PATH "/FiraCode.ttf", 10)) == NULL)
+		return 1;
 
 	fpstext = Texture_init();
 	SDL_Color text_color = {0, 0, 0, 255};
@@ -215,4 +197,13 @@ int load_media(void)
 	}
 
 	return 0;
+}
+
+TTF_Font *load_font_or_panic(const char *path, int ptsize)
+{
+	TTF_Font *tmp_font = TTF_OpenFont(path, ptsize);
+	if (tmp_font == NULL)
+		printf(PRINTF_ERROR " could not load the font file %s: %s\n", path, TTF_GetError());
+
+	return tmp_font;
 }
