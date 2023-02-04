@@ -2,7 +2,7 @@
 #ifndef __TIMER__
 #define __TIMER__
 
-#include <SDL.h>
+#include <SDL/SDL.h>
 
 typedef struct Timer_struct
 {

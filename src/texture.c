@@ -23,8 +23,6 @@ int Texture_free(Texture *texture)
 
 int Texture_load_from_file(Texture *texture, char *path)
 {
-	Texture_free(texture);
-
 	SDL_Texture *newTexture = NULL;
 
 	// Load image at specified path

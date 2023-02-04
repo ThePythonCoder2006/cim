@@ -9,6 +9,8 @@
 		"timer.h": "c",
 		"sdl_ttf.h": "c",
 		"molecule.h": "c",
-		"stdio.h": "c"
+		"stdio.h": "c",
+		"atom.c": "c",
+		"strings.h": "c"
 	}
 }

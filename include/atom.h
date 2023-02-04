@@ -3,6 +3,7 @@
 #define __ATOM__
 
 #include <stdint.h>
+#include <texture.h>
 
 // the atomic numbers of all the atoms
 enum
@@ -127,12 +128,17 @@ enum
 	BOND_DOUBLE,
 	BOND_TRIPLE,
 	BOND_QUADRUPLE,
+	BOND_QUINTUPLE,
 	BOND_SEXTUPLE,
 	BOND_WEDGE,
 	BOND_DASH,
 	BOND_STEREO_UNDEFINED,
 	BONDS_COUNT
 };
+
+int load_bonds(const char *folder_path);
+
+extern Texture *bond_textures[BONDS_COUNT];
 
 extern const uint8_t max_atom_bond[];
 extern const char atom_name[ATOM_COUNT][3];

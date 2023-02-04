@@ -9,9 +9,9 @@
 #include <texture.h>
 #include <consts.h>
 
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_ttf.h>
+#include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
+#include <SDL/SDL_ttf.h>
 
 typedef struct bond_struct
 {
@@ -22,7 +22,7 @@ typedef struct bond_struct
 typedef struct atom_struct
 {
 	uint8_t z;				// the atomic number of the atom
-	bond bonds[16];		// suppose an atom can only make 16 bonds (pretty sure this will be the case)
+	bond *bonds;			// all the bonds the aoms has
 	uint8_t max_bond; // the maximum amout of bonds that this atom type can create
 	uint8_t bond_num; // the current number of bonds connected to this atom
 	uint16_t index;		// the index of this atom in the molecule
@@ -38,8 +38,11 @@ typedef struct molecule_struct
 
 Molecule *Molecule_create();
 
+int Molecule_renderer(Molecule *mol, SDL_Color color);
+
+/* ---------------------- adding atoms ---------------------- */
 int Molecule_add_initial_atom(Molecule *mol, uint8_t z);
 
-int Molecule_renderer(Molecule *mol);
+int Molecule_add_atom(Molecule *mol, uint8_t z, uint16_t index, uint8_t bond_type);
 
 #endif // __MOLECULE__

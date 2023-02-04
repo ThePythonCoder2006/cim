@@ -31,6 +31,11 @@
 #define SCREEN_FPS 60
 #define SCREEN_TPS (1000 / SCREEN_FPS)
 
+#define BG_COLOR 0x11, 0x11, 0x11, 0xFF
+#define FRONT_COLOR 0xFF, 0xFF, 0xFF, 0xFF
+
+#define BOND_LEN 80
+
 extern SDL_Window *gWindow;
 extern SDL_Renderer *gRenderer;
 extern TTF_Font *gFont;

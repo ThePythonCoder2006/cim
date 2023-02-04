@@ -8,9 +8,9 @@
 #include <timer.h>
 #include <consts.h>
 
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_ttf.h>
+#include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
+#include <SDL/SDL_ttf.h>
 
 // The window on wich we render the app
 SDL_Window *gWindow = NULL;
@@ -47,10 +47,11 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-	Molecule *mol = Molecule_create();
-	Molecule_add_initial_atom(mol, N);
+	Molecule *Mol_main = Molecule_create();
+	Molecule_add_initial_atom(Mol_main, N);
+	Molecule_add_atom(Mol_main, H, 0, BOND_DOUBLE);
 
-	SDL_Color text_color = {0, 0, 0, 255};
+	const SDL_Color text_color = {FRONT_COLOR};
 
 	char buff[64];
 
@@ -68,7 +69,7 @@ int main(int argc, char **argv)
 				quit = 1;
 		}
 
-		SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+		SDL_SetRenderDrawColor(gRenderer, BG_COLOR);
 		SDL_RenderClear(gRenderer);
 
 		/* ---------------- geometry rendering ------------------ */
@@ -87,7 +88,7 @@ int main(int argc, char **argv)
 
 		Texture_render(fpstext, 0, 0, NULL, 0, NULL, 0);
 
-		Molecule_renderer(mol);
+		Molecule_renderer(Mol_main, text_color);
 
 		SDL_RenderPresent(gRenderer);
 		++counted_frames;
@@ -148,7 +149,7 @@ int SDL_init(void)
 	}
 
 	// Set the rendering color to black
-	SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
+	SDL_SetRenderDrawColor(gRenderer, BG_COLOR);
 
 	return 0;
 }
@@ -174,9 +175,9 @@ void SDL_quit(void)
 int load_media(void)
 {
 	bond_wedge = Texture_init();
-	if (Texture_load_from_file(bond_wedge, FILES_PATH "/wedge.png") != 0)
+	if (Texture_load_from_file(bond_wedge, FILES_PATH "/bonds/bond_wedge.png") != 0)
 	{
-		printf("could not load texture %s ! SDL error : %s\n", FILES_PATH "/wedge.png", SDL_GetError());
+		printf("could not load texture %s ! SDL error : %s\n", FILES_PATH "/bonds/wedge.png", SDL_GetError());
 		return 1;
 	}
 
@@ -195,6 +196,8 @@ int load_media(void)
 		printf("error, could not render text !!!\n");
 		return 1;
 	}
+
+	load_bonds(FILES_PATH "/bonds");
 
 	return 0;
 }
